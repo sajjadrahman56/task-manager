@@ -26,510 +26,133 @@ class BodyPart extends StatelessWidget {
         child: SingleChildScrollView(
       child: Column(
         children: [
-          Text(
-            'Sajjad Ahmed saju',
-            style: TextStyle(
-              fontSize: 19,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: TextField(
-                decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(0),
-              ),
-              labelText: 'Search',
-            )),
-          ),
-          SizedBox(
-            height: 10,
-          ),
+          _verticalGap(15),
+          _welcomeTextMessage('Welcome to Photo Gallery !'),
+          _verticalGap(20),
+          _textField(),
+          _verticalGap(15),
           SingleChildScrollView(
             child: Container(
-              color: Colors.green,
-              height: 300,
+              height: 270,
               child: GridView.count(
                 shrinkWrap: true,
                 crossAxisCount: 3,
+                crossAxisSpacing: 1,
+                mainAxisSpacing: 5,
                 children: [
-                  Column(
-                    children: [
-                      Image.network(
-                        'https://picsum.photos/250?image=9',
-                        height: 100,
-                        width: 130,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "Photo 1",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Image.network(
-                        'https://picsum.photos/250?image=9',
-                        height: 100,
-                        width: 130,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "Photo 1",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Image.network(
-                        'https://picsum.photos/250?image=9',
-                        height: 100,
-                        width: 130,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "Photo 1",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Image.network(
-                        'https://picsum.photos/250?image=9',
-                        height: 100,
-                        width: 130,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "Photo 1",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Image.network(
-                        'https://picsum.photos/250?image=9',
-                        height: 100,
-                        width: 120,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "Photo 1",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Image.network(
-                        'https://picsum.photos/250?image=9',
-                        height: 100,
-                        width: 120,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "Photo 1",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Image.network(
-                        'https://picsum.photos/250?image=9',
-                        height: 100,
-                        width: 120,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "Photo 1",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Image.network(
-                        'https://picsum.photos/250?image=9',
-                        height: 100,
-                        width: 120,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "Photo 1",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
+                  _GridItem('https://tinyurl.com/yeywese', 1, context),
+                  _GridItem('https://picsum.photos/250?image=9', 2, context),
+                  _GridItem('https://tinyurl.com/yeywese', 3, context),
+                  _GridItem('https://picsum.photos/250?image=9', 4, context),
+                  _GridItem('https://tinyurl.com/yeywese', 5, context),
+                  _GridItem('https://tinyurl.com/yeywese', 6, context),
+                  _GridItem('https://tinyurl.com/yeywese', 7, context),
                 ],
               ),
             ),
           ),
-          SizedBox(
-            height: 10,
+          _verticalGap(10),
+          SingleChildScrollView(
+            child: Container(
+              height: 210,
+              child: ListView(
+                children: [
+                  _ListItems('https://tinyurl.com/yeywese', 1, context),
+                  _ListItems('https://picsum.photos/250?image=9', 2, context),
+                  _ListItems('https://tinyurl.com/yeywese', 3, context),
+                  _ListItems('https://picsum.photos/250?image=9', 4, context),
+                  _ListItems('https://tinyurl.com/yeywese', 5, context),
+                ],
+              ),
+            ),
           ),
-          Container(
-            color: Colors.amber,
-            height: 280,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            color: Colors.red,
-            height: 40,
-          ),
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: GestureDetector(
+                onTap: () {
+                  mySnackbar('Image Upload Sucessfull', context);
+                },
+                child: Icon(
+                  Icons.upload_rounded,
+                  size: 50,
+                  color: Colors.blue,
+                ),
+              )),
         ],
       ),
     ));
   }
 }
 
+Widget _welcomeTextMessage(String Message) {
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: 10),
+    child: Text(
+      "$Message                 ",
+      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+    ),
+  );
+}
 
+Widget _textField() {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 10),
+    child: TextField(
+        decoration: InputDecoration(
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(0),
+      ),
+      labelText: 'Search',
+    )),
+  );
+}
 
-/*
+Widget _verticalGap(double n) {
+  return SizedBox(
+    height: n,
+  );
+}
 
- return Scaffold(
-        appBar: AppBar(
-          title: const Text('HomeScreen'),
+Widget _GridItem(String imageLink, int index, BuildContext context) {
+  return GestureDetector(
+    child: Column(
+      children: [
+        Image.network(
+          '$imageLink',
+          height: 100,
+          width: 120,
         ),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Container(
-              child: Column(
-                children: [
-                  Text('THis is sajad'),
-                  Text('THis is sajad'),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        labelText: 'Search',
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  SingleChildScrollView(
-                    
-                  ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  SingleChildScrollView(
-                      child: ListView(
-                    shrinkWrap: true,
-                    children: [
-                      ListTile(
-                        leading: Icon(Icons.shopping_bag),
-                        title: Text('Apples'),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.shopping_bag),
-                        title: Text('Rice'),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.shopping_bag),
-                        title: Text('Mango'),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.shopping_bag),
-                        title: Text('Watermelon'),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.shopping_bag),
-                        title: Text('Oranges'),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.shopping_bag),
-                        title: Text('Oranges'),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.shopping_bag),
-                        title: Text('Oranges'),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.shopping_bag),
-                        title: Text('Oranges'),
-                      ),
-                    ],
-                  )),
-                ],
-              ),
-            ),
-          ),
-        ));
-  
-  
+        _verticalGap(4),
+        Text(
+          "Photo $index",
+          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+        ),
+      ],
+    ),
+    onTap: () {
+      mySnackbar('Grid image no = $index', context);
+    },
+  );
+}
 
-*/
- 
-// import 'package:flutter/material.dart';
+Widget _ListItems(String imageLink, int index, BuildContext context) {
+  return GestureDetector(
+    child: ListTile(
+      leading: CircleAvatar(
+        radius: 25,
+        backgroundImage: NetworkImage(
+            '$imageLink'), // no matter how big it is, it won't overflow
+      ),
+      title: Text('Watermelon'),
+      subtitle: Text('I am cat'),
+    ),
+    onTap: () {
+      mySnackbar('List image no = $index', context);
+    },
+  );
+}
 
-// class HomeScreen extends StatelessWidget {
-//   const HomeScreen({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('HomeScreen'),
-//       ),
-//       body: Scrollbar(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             Text(
-//               "Welcome to Photo Gallery !                 ",
-//               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-//             ),
-//             SizedBox(
-//               height: 18,
-//             ),
-//             Container(
-//               margin: EdgeInsets.symmetric(
-//                   horizontal: 20), // Adjust the margin as needed
-//               child: TextField(
-//                 decoration: InputDecoration(
-//                   border: OutlineInputBorder(
-//                     borderRadius: BorderRadius.circular(20),
-//                   ),
-//                   labelText: 'Search',
-//                 ),
-//               ),
-//             ),
-//             SizedBox(
-//               height: 25,
-//             ),
-//             GridView.count(
-//               shrinkWrap: true,
-//               crossAxisCount: 3,
-//               children: [
-//                 Column(
-//                   children: [
-//                     Image.network(
-//                       'https://picsum.photos/250?image=9',
-//                       height: 100,
-//                       width: 120,
-//                     ),
-//                     SizedBox(
-//                       height: 5,
-//                     ),
-//                     Text(
-//                       "Photo 1",
-//                       style:
-//                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-//                     ),
-//                   ],
-//                 ),
-//                 Column(
-//                   children: [
-//                     Image.network(
-//                       'https://picsum.photos/250?image=9',
-//                       height: 100,
-//                       width: 120,
-//                     ),
-//                     SizedBox(
-//                       height: 5,
-//                     ),
-//                     Text(
-//                       "Photo 1",
-//                       style:
-//                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-//                     ),
-//                   ],
-//                 ),
-//                 Column(
-//                   children: [
-//                     Image.network(
-//                       'https://picsum.photos/250?image=9',
-//                       height: 100,
-//                       width: 120,
-//                     ),
-//                     SizedBox(
-//                       height: 5,
-//                     ),
-//                     Text(
-//                       "Photo 1",
-//                       style:
-//                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-//                     ),
-//                   ],
-//                 ),
-//                 Column(
-//                   children: [
-//                     Image.network(
-//                       'https://picsum.photos/250?image=9',
-//                       height: 100,
-//                       width: 120,
-//                     ),
-//                     SizedBox(
-//                       height: 5,
-//                     ),
-//                     Text(
-//                       "Photo 1",
-//                       style:
-//                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-//                     ),
-//                   ],
-//                 ),
-//                 Column(
-//                   children: [
-//                     Image.network(
-//                       'https://picsum.photos/250?image=9',
-//                       height: 100,
-//                       width: 120,
-//                     ),
-//                     SizedBox(
-//                       height: 5,
-//                     ),
-//                     Text(
-//                       "Photo 1",
-//                       style:
-//                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-//                     ),
-//                   ],
-//                 ),
-//                 Column(
-//                   children: [
-//                     Image.network(
-//                       'https://picsum.photos/250?image=9',
-//                       height: 100,
-//                       width: 120,
-//                     ),
-//                     SizedBox(
-//                       height: 5,
-//                     ),
-//                     Text(
-//                       "Photo 1",
-//                       style:
-//                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-//                     ),
-//                   ],
-//                 ),
-
-//                 Column(
-//                   children: [
-//                     Image.network(
-//                       'https://picsum.photos/250?image=9',
-//                       height: 80,
-//                       width: 100,
-//                     ),
-//                     SizedBox(
-//                       height: 5,
-//                     ),
-//                     Text("_counter"),
-//                   ],
-//                 ),
-//                 Column(
-//                   children: [
-//                     Image.network(
-//                       'https://picsum.photos/250?image=9',
-//                       height: 80,
-//                       width: 100,
-//                     ),
-//                     SizedBox(
-//                       height: 5,
-//                     ),
-//                     Text("_counter"),
-//                   ],
-//                 ),
-//                 Column(
-//                   children: [
-//                     Image.network(
-//                       'https://picsum.photos/250?image=9',
-//                       height: 80,
-//                       width: 100,
-//                     ),
-//                     SizedBox(
-//                       height: 5,
-//                     ),
-//                     Text("_counter"),
-//                   ],
-//                 ),
-//                 // Add more items here
-//               ],
-//             ),
-//             ListView(
-//               shrinkWrap: true,
-//               children: [
-//                 ListTile(
-//                   leading: Icon(Icons.shopping_bag),
-//                   title: Text('Apples'),
-//                 ),
-//                 ListTile(
-//                   leading: Icon(Icons.shopping_bag),
-//                   title: Text('Bananas'),
-//                 ),
-//                 ListTile(
-//                   leading: Icon(Icons.shopping_bag),
-//                   title: Text('Bread'),
-//                 ),
-//                 ListTile(
-//                   leading: Icon(Icons.shopping_bag),
-//                   title: Text('Milk'),
-//                 ),
-//                 ListTile(
-//                   leading: Icon(Icons.shopping_bag),
-//                   title: Text('Eggs'),
-//                 ),
-//                 ListTile(
-//                   leading: Icon(Icons.shopping_bag),
-//                   title: Text('Rice'),
-//                 ),
-//                 ListTile(
-//                   leading: Icon(Icons.shopping_bag),
-//                   title: Text('Mango'),
-//                 ),
-//                 ListTile(
-//                   leading: Icon(Icons.shopping_bag),
-//                   title: Text('Watermelon'),
-//                 ),
-//                 ListTile(
-//                   leading: Icon(Icons.shopping_bag),
-//                   title: Text('Oranges'),
-//                 ),
-//               ],
-//             )
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+mySnackbar(message, context) {
+  return ScaffoldMessenger.of(context)
+      .showSnackBar(SnackBar(content: Text('$message')));
+}
