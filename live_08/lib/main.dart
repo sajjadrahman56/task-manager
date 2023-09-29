@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
       home: HomePage(),
@@ -28,7 +28,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Responsive Builder'),
+        title: const Text('News Feed'),
+        backgroundColor: Colors.blue, // set the background color to blue
       ),
       body: OrientationLayoutBuilder(
         portrait: (context) => protiteModeWidget(),
@@ -50,9 +51,10 @@ Widget protiteModeWidget() {
             return Card(
               shadowColor: Colors.deepPurple,
               child: Align(
-                alignment: Alignment.center,
+                alignment: Alignment.topCenter,
                 child: Image.network(
-                  'https://st.adda247.com/https://wpassets.adda247.com/wp-content/uploads/multisite/sites/5/2023/03/30120815/gettyimages-1472307522-1-1680093625.jpg',
+                  'https://via.placeholder.com/150',
+                  //'https://st.adda247.com/https://wpassets.adda247.com/wp-content/uploads/multisite/sites/5/2023/03/30120815/gettyimages-1472307522-1-1680093625.jpg',
                   width: 150,
                   height: 150,
                 ),
@@ -85,7 +87,7 @@ Widget LendscapeModeWidget() {
                 child: Align(
                   alignment: Alignment.topCenter,
                   child: Image.network(
-                    'https://st.adda247.com/https://wpassets.adda247.com/wp-content/uploads/multisite/sites/5/2023/03/30120815/gettyimages-1472307522-1-1680093625.jpg',
+                    'https://via.placeholder.com/150',
                     width: 150,
                     height: 150,
                   ),
