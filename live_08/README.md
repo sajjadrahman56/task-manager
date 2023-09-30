@@ -2,15 +2,15 @@
 
 A new Flutter project.
 
-## Getting Started
+ 
 
-This project is a starting point for a Flutter application.
+## Project SS
+ <div style="margin-bottom: 20px;">
+       <img src="../images/1.png" width="200" height="300" alt="Image 2">
+</div>
 
-A few resources to get you started if this is your first Flutter project:
+<div style="margin-bottom: 20px;">
+ 
+  <img src="../images/2.png" width="350" height="150" alt="Image 2">
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+</div>
