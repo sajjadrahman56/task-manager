@@ -1,26 +1,59 @@
 import 'package:flutter/material.dart';
 
-class ButtonScreen extends StatefulWidget {
-  const ButtonScreen({super.key});
-
+class ButtonScreen2 extends StatefulWidget {
   @override
-  State<ButtonScreen> createState() => _ButtonScreenState();
+  _ButtonScreenState2 createState() => _ButtonScreenState2();
 }
 
-class _ButtonScreenState extends State<ButtonScreen> {
-  Map<String, bool> buttonStates = {
-    'S': false,
-    'M': false,
-    'L': false,
-    'XL': false,
-    'XXL': false,
-    'XXXL': false,
+class _ButtonScreenState2 extends State<ButtonScreen2> {
+  String selectedButton = 'S'; // Default selected button
+  Map<String, Color> buttonColors = {
+    'S': Colors.grey,
+    'M': Colors.grey,
+    'L': Colors.grey,
+    'XL': Colors.grey,
+    'XXL': Colors.grey,
+    'XXXL': Colors.grey,
   };
+
+  void _updateButtonState(String button) {
+    setState(() {
+      // Reset all buttons to gray
+      buttonColors.forEach((key, value) {
+        buttonColors[key] = Colors.grey;
+      });
+
+      // Set the selected button to red
+      buttonColors[button] = Colors.red;
+
+      // Update selected button
+      selectedButton = button;
+
+      // Show dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Center(child: Text(button)),
+            actions: <Widget>[
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('Close'),
+              ),
+            ],
+          );
+        },
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select Sizer'),
+        title: Text('Select Size'),
         centerTitle: true,
       ),
       body: Center(
@@ -28,82 +61,73 @@ class _ButtonScreenState extends State<ButtonScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.all(22.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey,
-                    ),
                     onPressed: () {
-                      setState(() {
-                        buttonStates['S'] = !buttonStates['S']!;
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text('s'),
-                              actions: <Widget>[
-                                ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                    print('Dialog closed');
-                                  },
-                                  child: Text('Close'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      });
+                      _updateButtonState('S');
                     },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: buttonColors['S'],
+                    ),
                     child: const Text('S'),
                   ),
                   ElevatedButton(
+                    onPressed: () {
+                      _updateButtonState('M');
+                    },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey,
+                      backgroundColor: buttonColors['M'],
                     ),
-                    onPressed: () {},
                     child: const Text('M'),
                   ),
                   ElevatedButton(
+                    onPressed: () {
+                      _updateButtonState('L');
+                    },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey,
+                      backgroundColor: buttonColors['L'],
                     ),
-                    onPressed: () {},
                     child: const Text('L'),
                   ),
                   ElevatedButton(
+                    onPressed: () {
+                      _updateButtonState('XL');
+                    },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey,
+                      backgroundColor: buttonColors['XL'],
                     ),
-                    onPressed: () {},
                     child: const Text('XL'),
                   ),
                 ],
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 35),
+              padding: const EdgeInsets.symmetric(horizontal: 22.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   ElevatedButton(
+                    onPressed: () {
+                      _updateButtonState('XXL');
+                    },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey,
+                      backgroundColor: buttonColors['XXL'],
                     ),
-                    onPressed: () {},
                     child: const Text('XXL'),
                   ),
                   SizedBox(
-                    width: 20,
+                    width: 30.0,
                   ),
                   ElevatedButton(
+                    onPressed: () {
+                      _updateButtonState('XXXL');
+                    },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey,
+                      backgroundColor: buttonColors['XXXL'],
                     ),
-                    onPressed: () {},
                     child: const Text('XXXL'),
                   ),
                 ],
@@ -112,12 +136,6 @@ class _ButtonScreenState extends State<ButtonScreen> {
           ],
         ),
       ),
-    );
-  }
-
-  buttonStyle() {
-    return ElevatedButton.styleFrom(
-      backgroundColor: Colors.grey,
     );
   }
 }
