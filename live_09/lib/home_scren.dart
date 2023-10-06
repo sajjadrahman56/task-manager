@@ -18,18 +18,13 @@ class _ButtonScreenState2 extends State<ButtonScreen2> {
 
   void _updateButtonState(String button) {
     setState(() {
-      // Reset all buttons to gray
       buttonColors.forEach((key, value) {
         buttonColors[key] = Colors.grey;
       });
 
-      // Set the selected button to red
       buttonColors[button] = Colors.red;
 
-      // Update selected button
       selectedButton = button;
-
-      // Show dialog
       showDialog(
         context: context,
         builder: (BuildContext context) {
