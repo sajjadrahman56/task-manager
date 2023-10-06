@@ -8,6 +8,14 @@ class ButtonScreen extends StatefulWidget {
 }
 
 class _ButtonScreenState extends State<ButtonScreen> {
+  Map<String, bool> buttonStates = {
+    'S': false,
+    'M': false,
+    'L': false,
+    'XL': false,
+    'XXL': false,
+    'XXXL': false,
+  };
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +36,28 @@ class _ButtonScreenState extends State<ButtonScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.grey,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        buttonStates['S'] = !buttonStates['S']!;
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('s'),
+                              actions: <Widget>[
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    print('Dialog closed');
+                                  },
+                                  child: Text('Close'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      });
+                    },
                     child: const Text('S'),
                   ),
                   ElevatedButton(
