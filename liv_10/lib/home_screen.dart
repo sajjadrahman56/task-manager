@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Selection Screen'),
+        title: const Text('Selection Screen'),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: Text('Selected Items'),
+                title: const Text('Selected Items'),
                 content:
                     Text('No of selected items ${_selectedIndices.length} '),
                 actions: <Widget>[
@@ -40,13 +40,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text('Close')),
+                      child: const Text('Close')),
                 ],
               );
             },
           );
         },
-        child: Icon(Icons.check),
+        child: const Icon(Icons.check),
       ),
       body: ListView.builder(
         itemCount: items.length,
