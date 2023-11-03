@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:liv_11/model/weather_model.dart';
+import 'package:liv_11/views/weather_model.dart';
 
 void main() {
   runApp(const MyApp());
