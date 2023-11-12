@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager_101/ui/screen/login_screen.dart';
-import 'package:task_manager_101/ui/screen/pin_verification.dart';
+ 
 import 'package:task_manager_101/ui/screen/reset_screen.dart';
-import 'package:task_manager_101/ui/screen/sign_up_screen.dart';
+ 
 
 import 'package:task_manager_101/ui/widget/body_background.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
