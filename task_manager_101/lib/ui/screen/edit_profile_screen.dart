@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:task_manager_101/ui/widget/profile_summary_card.dart';
 import '../widget/body_background.dart';
@@ -17,7 +15,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            ProfileSummaryCard(
+            const ProfileSummaryCard(
               enableOntap: false,
             ),
             Expanded(
@@ -39,31 +37,31 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         const SizedBox(
                           height: 8.0,
                         ),
-                        TextField(
+                        const TextField(
                           decoration: InputDecoration(hintText: 'Email'),
                         ),
                         const SizedBox(
                           height: 8.0,
                         ),
-                        TextField(
+                        const TextField(
                           decoration: InputDecoration(hintText: 'First Name'),
                         ),
                         const SizedBox(
                           height: 8.0,
                         ),
-                        TextField(
+                        const TextField(
                           decoration: InputDecoration(hintText: 'Last Name'),
                         ),
                         const SizedBox(
                           height: 8.0,
                         ),
-                        TextField(
+                        const TextField(
                           decoration: InputDecoration(hintText: 'Mobile'),
                         ),
                         const SizedBox(
                           height: 8.0,
                         ),
-                        TextField(
+                        const TextField(
                           decoration: InputDecoration(hintText: 'Password'),
                         ),
                         const SizedBox(
@@ -73,7 +71,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           width: double.infinity,
                           child: ElevatedButton(
                               onPressed: () {},
-                              child: Icon(Icons.arrow_circle_right_outlined)),
+                              child: const Icon(Icons.arrow_circle_right_outlined)),
                         )
                       ]),
                 ),
@@ -95,14 +93,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           flex: 1,
           child: Container(
               height: 50,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: Colors.grey,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(8.0),
                     bottomLeft: Radius.circular(8.0),
                   )),
               alignment: Alignment.center,
-              child: Text(
+              child: const Text(
                 'Photo',
                 style: TextStyle(color: Colors.white),
               )),
@@ -110,8 +108,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         Expanded(
           flex: 3,
           child: Container(
-            padding: EdgeInsets.only(left: 8.0),
-            child: Text(' empty'),
+            padding: const EdgeInsets.only(left: 8.0),
+            child: const Text(' empty'),
           ),
         ),
       ]),

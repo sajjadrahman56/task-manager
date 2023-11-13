@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
- 
+import 'package:task_manager_101/data/network_caller/network_response.dart';
+
 import 'package:task_manager_101/ui/widget/body_background.dart';
+import 'package:task_manager_101/ui/widget/snack_message.dart';
+
+import '../../data/network_caller/ntwork_caller.dart';
+import '../../data/utility/utils.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -10,6 +15,14 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _mobileController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  bool _signUpInProgress = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,89 +31,189 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 80,
-                ),
-                Text(
-                  'Join with us',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                TextFormField(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 80,
+                  ),
+                  Text(
+                    'Join with us',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  TextFormField(
+                    controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       hintText: 'Email',
-                    )),
-                const SizedBox(
-                  height: 16,
-                ),
-                TextFormField(
+                    ),
+                    validator: (String? value) {
+                      if (value?.trim().isEmpty ?? true) {
+                        return 'Please enter valid email';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  TextFormField(
+                    controller: _firstNameController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       hintText: 'First Name',
-                    )),
-                const SizedBox(
-                  height: 16,
-                ),
-                TextFormField(
+                    ),
+                    validator: (String? value) {
+                      if (value?.trim().isEmpty ?? true) {
+                        return 'enter your first name';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  TextFormField(
+                    controller: _lastNameController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       hintText: 'Last Name',
-                    )),
-                const SizedBox(
-                  height: 16,
-                ),
-                TextFormField(
+                    ),
+                    validator: (String? value) {
+                      if (value?.trim().isEmpty ?? true) {
+                        return 'enter your last name';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  TextFormField(
+                    controller: _mobileController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       hintText: 'Mobile',
-                    )),
-                const SizedBox(
-                  height: 16,
-                ),
-
-
-                TextFormField(
-                  keyboardType: TextInputType.visiblePassword,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    hintText: 'Password',
+                    ),
+                    validator: (String? value) {
+                      if (value?.trim().isEmpty ?? true) {
+                        return 'enter valid phone';
+                      }
+                      return null;
+                    },
                   ),
-                ),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: Icon(Icons.arrow_circle_right_outlined),
+                  const SizedBox(
+                    height: 16,
                   ),
-                ),
-                const SizedBox(
-                  height: 48,
-                ),
-                
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                  Text("Have an account?"),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text(
-                        'Sign In',
-                        style: TextStyle(fontSize: 16),
-                      ))
-                ],)
-              ],
+                  TextFormField(
+                    controller: _passwordController,
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      hintText: 'Password',
+                    ),
+                    validator: (String? value) {
+                      if (value?.isEmpty ?? true) {
+                        return 'enter your Password  ';
+                      }
+                      if (value!.length < 6) {
+                        return 'Password must be at least 6 characters';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: Visibility(
+                      visible: _signUpInProgress == false,
+                      replacement: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          _signUP();
+                        },
+                        child: Icon(Icons.arrow_circle_right_outlined),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 48,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Have an account?"),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            'Sign In',
+                            style: TextStyle(fontSize: 16),
+                          ))
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
       )),
     );
+  }
+
+  Future<void> _signUP() async {
+    if (_formKey.currentState!.validate()) {
+      _signUpInProgress = true;
+      if (mounted) setState(() {});
+
+      final NetworkResponse response =
+          await NetworkCaller().postRequest(Urls.registration, body: {
+        "firstName": _firstNameController.text.trim(),
+        "lastName": _lastNameController.text.trim(),
+        "email": _emailController.text.trim(),
+        "password": _passwordController.text.trim(),
+        "mobile": _mobileController.text.trim(),
+      });
+      _signUpInProgress = false;
+      if (mounted) setState(() {});
+
+      if (response.isSuccess) {
+        _clearTextField();
+        if (mounted) {
+          showSnackBarMessage(
+              context, 'Account Has been Created . Please Log in !');
+        } else {
+          if (mounted) {
+            showSnackBarMessage(
+                context, 'Account creation failed ! Please try again', true);
+          }
+        }
+      }
+    }
+  }
+
+  void _clearTextField() {
+    _emailController.clear();
+    _firstNameController.clear();
+    _lastNameController.clear();
+    _mobileController.clear();
+    _passwordController.clear();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _mobileController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 }
