@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
+
+import '../screen/edit_profile_screen.dart';
 class ProfileSummaryCard extends StatelessWidget {
   const ProfileSummaryCard({
-    super.key,
+    super.key,this.enableOntap=true
   });
 
+  final bool enableOntap ;
   @override
   Widget build(BuildContext context) {
     return   ListTile(
+      onTap: (){
+       if(enableOntap)
+       {
+         Navigator.push(context,
+        MaterialPageRoute(builder: (context) => EditProfileScreen()));
+       }
+      },
       leading: CircleAvatar(
         child: Icon(Icons.person),
       ),
@@ -23,7 +33,7 @@ class ProfileSummaryCard extends StatelessWidget {
           color: Colors.white,
         ),
       ),
-      trailing: Icon(Icons.more_vert),
+      trailing: enableOntap ? Icon(Icons.arrow_forward) : null,
       tileColor: Colors.green[700],
     );
   }

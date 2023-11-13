@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:task_manager_101/ui/screen/cancle_task_screen.dart';
 import 'package:task_manager_101/ui/screen/completed_task_screen.dart';
@@ -26,13 +25,9 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
       body: _screen[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
-        
-        onTap: (index){
-           _selectedIndex = index;
-          setState(() {
-           
-          });
-        
+        onTap: (index) {
+          _selectedIndex = index;
+          setState(() {});
         },
         selectedItemColor: Colors.green,
         unselectedItemColor: Colors.grey,
@@ -41,10 +36,8 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'New'),
           BottomNavigationBarItem(
               icon: Icon(Icons.calendar_today), label: 'Inprogress'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.done), label: 'Completed'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.cancel), label: 'Cancelled'),
+          BottomNavigationBarItem(icon: Icon(Icons.done), label: 'Completed'),
+          BottomNavigationBarItem(icon: Icon(Icons.cancel), label: 'Cancelled'),
         ],
       ),
     );
