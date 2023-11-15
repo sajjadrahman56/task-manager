@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:task_manager_101/data/model/user_model.dart';
 import 'package:task_manager_101/data/network_caller/network_response.dart';
 import 'package:task_manager_101/data/network_caller/ntwork_caller.dart';
+import 'package:task_manager_101/ui/controller/auth_controller.dart';
 import 'package:task_manager_101/ui/screen/forget_pass_screen.dart';
 import 'package:task_manager_101/ui/screen/main_buttom_nav_screen.dart';
 import 'package:task_manager_101/ui/screen/sign_up_screen.dart';
-
 import 'package:task_manager_101/ui/widget/body_background.dart';
 import 'package:task_manager_101/ui/widget/snack_message.dart';
-
 import '../../data/utility/utils.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -158,9 +157,9 @@ class _LoginScreenState extends State<LoginScreen> {
         });
       }
     if(response.isSuccess){
-
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('token', response.jsonResponse['token']);
+      await AuthController.saveUserInformation(
+          response.jsonResponse['token'] , UserModel.fromJson(response.jsonResponse['data'])
+           );
      if(mounted)
        {
          Navigator.push(
