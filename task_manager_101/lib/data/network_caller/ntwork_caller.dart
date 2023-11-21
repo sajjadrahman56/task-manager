@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
+import 'package:task_manager_101/ui/controller/auth_controller.dart';
 import 'dart:convert';
 
 import 'network_response.dart';
@@ -11,7 +13,9 @@ class NetworkCaller {
       final Response response =
           await post(Uri.parse(url), body: jsonEncode(body), headers: {
         'Content-Type': 'application/json',
+            'token': AuthController.token.toString(),
       });
+      log(response.headers.toString());
       log(response.statusCode.toString());
       log(response.body);
 

@@ -19,12 +19,13 @@ class _SplashScreenState extends State<SplashScreen> {
   }
   void goToLogin() async{
       final bool isLoggedIn = await AuthController.checkUserAuthenticOrNot();
+      print('isLoggedIn in => $isLoggedIn');
 
     Future.delayed(const Duration(seconds: 3)).then((value) {
       Navigator.pushAndRemoveUntil(
         context,
-       MaterialPageRoute(builder: (context)=>  isLoggedIn ? const LoginScreen() :
-       MainBottomNavScreen()
+       MaterialPageRoute(builder: (context)=>  isLoggedIn ? MainBottomNavScreen() : const LoginScreen() 
+
        ),
        (route)=>false);
     } );

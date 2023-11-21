@@ -61,7 +61,7 @@ class _ProfileSummaryCardState extends State<ProfileSummaryCard> {
   }
 
   String get fullName{
-    return "${AuthController.user?.firstName ?? ''}  ${AuthController.user!.lastName?? ''}";
+    return "${AuthController.user?.firstName ?? 'default'}  ${AuthController.user?.lastName?? 'Name'}";
 
   }
 }

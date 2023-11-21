@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_manager_101/data/model/user_model.dart';
 
@@ -20,12 +21,15 @@ class AuthController{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token =  prefs.getString('token');
     user = UserModel.fromJson(jsonDecode(prefs.getString('user') ?? '{}'));
+    log('i am  from 23 inside initalize methdo');
   }
 
   static Future<bool> checkUserAuthenticOrNot() async {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
+    log('the oken is --------------');
+    print(token);
     if(token != null)
       {
         await initializeUserCache();
