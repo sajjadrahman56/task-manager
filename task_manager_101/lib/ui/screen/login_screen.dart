@@ -148,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
     NetworkResponse response = await NetworkCaller().postRequest(Urls.login,
         body: {
           "email": _emailController.text.trim(),
-          "password": _passwordController.text});
+          "password": _passwordController.text},isLogIn: true);
 
     _looginProgress = false;
     if(mounted)

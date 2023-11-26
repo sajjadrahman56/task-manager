@@ -1,14 +1,16 @@
 import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:task_manager_101/app.dart';
 import 'package:task_manager_101/ui/controller/auth_controller.dart';
+import 'package:task_manager_101/ui/screen/login_screen.dart';
 import 'dart:convert';
 
 import 'network_response.dart';
 
 class NetworkCaller {
-  Future postRequest(String url, {Map<String, dynamic>? body}) async {
+  Future postRequest(String url, {Map<String, dynamic>? body, bool isLogIn=false}) async {
     try {
       final Response response =
           await post(Uri.parse(url), body: jsonEncode(body), headers: {
@@ -25,7 +27,18 @@ class NetworkCaller {
           isSuccess: true,
           jsonResponse: jsonDecode(response.body),
         );
+      }else if (response.statusCode == 401) {
+       if(isLogIn == false)
+         {
+           backToLogin();
+         }
+        return NetworkResponse(
+          statusCode: response.statusCode,
+          isSuccess: true,
+          jsonResponse: jsonDecode(response.body),
+        );
       }
+
       else{
         return NetworkResponse(
           statusCode: response.statusCode,
@@ -40,5 +53,12 @@ class NetworkCaller {
       );
     }
   }
+
+  Future<void> backToLogin() async{
+    await AuthController.claerSaveCheceData();
+    Navigator.pushAndRemoveUntil(TaskManagerApp.navigationKey.currentContext!,
+        MaterialPageRoute(builder: (context)=>LoginScreen()), (route) => false);
+  }
+
 }
 
