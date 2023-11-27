@@ -54,6 +54,46 @@ class NetworkCaller {
     }
   }
 
+  Future getRequest(String url) async {
+    try {
+      final Response response =
+      await get(Uri.parse(url), headers: {
+        'Content-Type': 'application/json',
+        'token': AuthController.token.toString(),
+      });
+      log(response.headers.toString());
+      log(response.statusCode.toString());
+      log(response.body);
+
+      if (response.statusCode == 200) {
+        return NetworkResponse(
+          statusCode: response.statusCode,
+          isSuccess: true,
+          jsonResponse: jsonDecode(response.body),
+        );
+      }else if (response.statusCode == 401) {
+        backToLogin();
+        return NetworkResponse(
+          statusCode: response.statusCode,
+          isSuccess: true,
+          jsonResponse: jsonDecode(response.body),
+        );
+      }
+
+      else{
+        return NetworkResponse(
+          statusCode: response.statusCode,
+          isSuccess: false,
+          jsonResponse: jsonDecode(response.body),
+        );
+      }
+    } catch (e) {
+      return NetworkResponse(
+        isSuccess: false,
+        errorMessage: e.toString(),
+      );
+    }
+  }
   Future<void> backToLogin() async{
     await AuthController.claerSaveCheceData();
     Navigator.pushAndRemoveUntil(TaskManagerApp.navigationKey.currentContext!,

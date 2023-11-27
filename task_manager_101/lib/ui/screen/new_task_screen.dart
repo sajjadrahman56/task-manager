@@ -12,6 +12,14 @@ class NewTasksScreen extends StatefulWidget {
 }
 
 class _NewTasksScreenState extends State<NewTasksScreen> {
+  bool _getNewTaskInProgress = false;
+  Future<void> getNewTask() async {
+    _getNewTaskInProgress = true;
+    if(mounted){
+      setState(() {
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
