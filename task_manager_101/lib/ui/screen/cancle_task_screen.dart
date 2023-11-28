@@ -21,7 +21,7 @@ class _CancelTasksScreenState extends State<CancelTasksScreen> {
               child: ListView.builder(
                   itemCount: 5,
                   itemBuilder: (context, index) {
-                    return TaskItemCard();
+                   // return TaskItemCard();
                   }),
             )
           ],
