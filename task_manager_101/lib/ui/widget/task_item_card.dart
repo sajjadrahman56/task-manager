@@ -30,21 +30,20 @@ class _TaskItemCardState extends State<TaskItemCard> {
     widget.showProgeress(false);
   }
 
-  Future<void> deleteStatus(String status) async {
+  Future<void> deleteStatus() async {
     widget.showProgeress(true);
     final NetworkResponse response = await NetworkCaller()
-        .getRequest(Urls.updateTaskStatus(widget.task.sId ?? '', status));
+        .getRequest(Urls.delateTaskStatus(widget.task.sId ?? ''));
     if (response.isSuccess) {
       widget.onStatusChane();
     }
-
     widget.showProgeress(false);
   }
-  hjd // 46 munite
+
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -52,7 +51,7 @@ class _TaskItemCardState extends State<TaskItemCard> {
           children: [
             Text(
               widget.task.title ?? '',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
             ),
             Text(widget.task.description ?? ''),
             Text('Data : ${widget.task.createdDate}'),
@@ -69,7 +68,9 @@ class _TaskItemCardState extends State<TaskItemCard> {
                 Wrap(
                   children: [
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showDeleteStatusModel();
+                        },
                         icon: Icon(Icons.delete_forever_outlined)),
                     IconButton(
                         onPressed: () {
@@ -86,6 +87,39 @@ class _TaskItemCardState extends State<TaskItemCard> {
     );
   }
 
+  void showDeleteStatusModel() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Delete Task'),
+            content: const Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                  Text("Are you sure to Delete Task")
+              ],
+            ),
+            actions: [
+              ButtonBar(
+                children: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        'Cancel',
+                        style: TextStyle(color: Colors.grey),
+                      )),
+                  TextButton(onPressed: () {
+                    deleteStatus();
+                    Navigator.pop(context);
+                  }, child: const Text('OK')),
+                ],
+              )
+            ],
+          );
+        });
+  }
   void showUpdateStatusModel() {
     List<ListTile> items = TaskStatus.values.map((e) {
       return ListTile(
@@ -101,7 +135,7 @@ class _TaskItemCardState extends State<TaskItemCard> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Update Status'),
+            title: const Text('Update Status'),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: items,
@@ -113,11 +147,11 @@ class _TaskItemCardState extends State<TaskItemCard> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text(
+                      child: const Text(
                         'Cancel',
                         style: TextStyle(color: Colors.grey),
                       )),
-                  TextButton(onPressed: () {}, child: Text('Update')),
+                  TextButton(onPressed: () {}, child: const Text('Update')),
                 ],
               )
             ],
