@@ -100,5 +100,74 @@ class NetworkCaller {
         MaterialPageRoute(builder: (context)=>LoginScreen()), (route) => false);
   }
 
+
+  Future resetPasswordRequest(String url, {Map<String, dynamic>? body}) async {
+    try {
+      final Response response = await post(
+        Uri.parse(url),
+        body: body != null ? jsonEncode(body) : null,
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        return NetworkResponse(
+          statusCode: response.statusCode,
+          isSuccess: true,
+          jsonResponse: jsonDecode(response.body),
+        );
+      } else {
+        return NetworkResponse(
+          statusCode: response.statusCode,
+          isSuccess: false,
+          jsonResponse: jsonDecode(response.body),
+        );
+      }
+    } catch (e) {
+      return NetworkResponse(
+        isSuccess: false,
+        errorMessage: e.toString(),
+      );
+    }
+  }
+  Future postRequest2(String url, {Map<String, dynamic>? body}) async {
+    try {
+      final Response response =
+      await post(Uri.parse(url), body: jsonEncode(body), headers: {
+        'Content-Type': 'application/json',
+        'token': AuthController.token.toString(),
+      });
+      log(response.headers.toString());
+      log(response.statusCode.toString());
+      log(response.body);
+
+      if (response.statusCode == 200) {
+        log('sajjad samina');
+        return NetworkResponse(
+          statusCode: response.statusCode,
+          isSuccess: true,
+          jsonResponse: jsonDecode(response.body),
+        );
+      }else if (response.statusCode == 401) {
+        return NetworkResponse(
+          statusCode: response.statusCode,
+          isSuccess: true,
+          jsonResponse: jsonDecode(response.body),
+        );
+      }
+
+      else{
+        return NetworkResponse(
+          statusCode: response.statusCode,
+          isSuccess: false,
+          jsonResponse: jsonDecode(response.body),
+        );
+      }
+    } catch (e) {
+      return NetworkResponse(
+        isSuccess: false,
+        errorMessage: e.toString(),
+      );
+    }
+  }
 }
 

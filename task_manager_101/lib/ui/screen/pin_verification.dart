@@ -1,20 +1,29 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:task_manager_101/ui/screen/login_screen.dart';
- 
+
 import 'package:task_manager_101/ui/screen/reset_screen.dart';
- 
 
 import 'package:task_manager_101/ui/widget/body_background.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class PinVerificationScreen extends StatefulWidget {
-  const PinVerificationScreen({super.key});
+import '../../data/network_caller/network_response.dart';
+import '../../data/network_caller/ntwork_caller.dart';
+import '../../data/utility/utils.dart';
+import '../widget/snack_message.dart';
 
+class PinVerificationScreen extends StatefulWidget {
+  const PinVerificationScreen({super.key, required this.eamilId});
+  final String eamilId;
   @override
   State<PinVerificationScreen> createState() => _PinVerificationScreenState();
 }
 
 class _PinVerificationScreenState extends State<PinVerificationScreen> {
+  bool _looginProgress = false;
+  String enteredPin = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +45,7 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                 const SizedBox(
                   height: 8,
                 ),
-                Text(
+                const Text(
                   'A 6 digit otp will sent to your email check the mail box twice',
                   style: TextStyle(fontSize: 14, color: Colors.grey),
                 ),
@@ -54,15 +63,15 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                     fieldWidth: 40,
                     activeFillColor: Colors.white,
                     activeColor: Colors.green,
-                     inactiveFillColor: Colors.white,
+                    inactiveFillColor: Colors.white,
                   ),
                   enableActiveFill: true,
                   onCompleted: (v) {
-                    print("Completed");
+                    setState(() {
+                      enteredPin = v;
+                    });
                   },
-                  onChanged: (value) {
-                    print(value);
-                  },
+                  onChanged: (value) {},
                   beforeTextPaste: (text) {
                     return true;
                   },
@@ -73,16 +82,17 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                 ),
                 SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ResetPasswordScreen(),
-                        ),
-                      );
-                    },
-                    child: Text('Verify'),
+                  child: Visibility(
+                    visible: _looginProgress == false,
+                    replacement: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    child: ElevatedButton(
+                      onPressed: (){
+                        pinVerification(widget.eamilId,enteredPin);
+                      },
+                      child: Text('Verify'),
+                    ),
                   ),
                 ),
                 Row(
@@ -91,14 +101,12 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                     Text("Have an account ?"),
                     TextButton(
                         onPressed: () {
-                           
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LoginScreen(), 
-                          ),(route) => false
-                        );
-                     
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginScreen(),
+                              ),
+                              (route) => false);
                         },
                         child: Text(
                           'Sign In',
@@ -112,5 +120,35 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
         ),
       )),
     );
+  }
+
+  Future<void> pinVerification(String email , String otpCode) async {
+    setState(() {
+      _looginProgress = true; // Start the progress indicator
+    });
+
+    NetworkResponse response = await NetworkCaller().getRequest(
+      Urls.pinVerification(widget.eamilId, enteredPin),
+    );
+
+    // Update state and UI after network call
+    setState(() {
+      _looginProgress = false; // Stop the progress indicator
+    });
+
+    if (response.isSuccess) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>   ResetPasswordScreen(emailId: email, otp: otpCode,),
+        ),
+      );
+    } else {
+      if (response.statusCode == 401) {
+        showSnackBarMessage(context, "Enter Six Digit Pin");
+      } else {
+        showSnackBarMessage(context, "Email or Pin is wrong");
+      }
+    }
   }
 }
