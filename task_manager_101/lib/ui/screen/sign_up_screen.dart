@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager_101/data/network_caller/network_response.dart';
+import 'package:task_manager_101/ui/screen/login_screen.dart';
 
 import 'package:task_manager_101/ui/widget/body_background.dart';
 import 'package:task_manager_101/ui/widget/snack_message.dart';
 
-import '../../data/network_caller/ntwork_caller.dart';
+import '../../data/network_caller/network_caller.dart';
+import '../../data/utility/regex.dart';
 import '../../data/utility/utils.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -49,14 +51,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   TextFormField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Email',
                     ),
                     validator: (String? value) {
                       if (value?.trim().isEmpty ?? true) {
-                        return 'Please enter valid email';
+                        return 'Please enter your email';
                       }
-                      return null;
+                      RegExp regex =   RegExp(ReGex.emailPattern.toString());
+                      if (!regex.hasMatch(value!)) {
+                        return 'Enter valid email';
+                      } else {
+                        return null;
+                      }
                     },
                   ),
                   const SizedBox(
@@ -64,15 +71,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   TextFormField(
                     controller: _firstNameController,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
+                    keyboardType: TextInputType.name,
+                    decoration: const InputDecoration(
                       hintText: 'First Name',
                     ),
                     validator: (String? value) {
                       if (value?.trim().isEmpty ?? true) {
-                        return 'enter your first name';
+                        return 'Please enter your first name';
                       }
-                      return null;
+                      RegExp regex =   RegExp( ReGex.namePattern.toString());
+                      if (!regex.hasMatch(value!)) {
+                        return 'First name must not contain numbers';
+                      } else {
+                        return null;
+                      }
                     },
                   ),
                   const SizedBox(
@@ -80,33 +92,46 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   TextFormField(
                     controller: _lastNameController,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
+                    keyboardType: TextInputType.name,
+                    decoration: const InputDecoration(
                       hintText: 'Last Name',
                     ),
                     validator: (String? value) {
                       if (value?.trim().isEmpty ?? true) {
-                        return 'enter your last name';
+                        return 'Please enter your last name';
                       }
-                      return null;
+                      RegExp regex =  RegExp( ReGex.namePattern.toString());
+                      if (!regex.hasMatch(value!)) {
+                        return 'Last name must not contain numbers';
+                      } else {
+                        return null;
+                      }
                     },
                   ),
+
                   const SizedBox(
                     height: 16,
                   ),
                   TextFormField(
                     controller: _mobileController,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
+                    keyboardType: TextInputType.phone,
+                    decoration: const InputDecoration(
                       hintText: 'Mobile',
                     ),
                     validator: (String? value) {
                       if (value?.trim().isEmpty ?? true) {
-                        return 'enter valid phone';
+                        return 'Please enter your phone number';
                       }
-                      return null;
+
+                      RegExp regex = RegExp(ReGex.phonePattern.toString());
+                      if (!regex.hasMatch(value!)) {
+                        return 'Enter a valid BD phone number';
+                      } else {
+                        return null;
+                      }
                     },
                   ),
+
                   const SizedBox(
                     height: 16,
                   ),
@@ -114,7 +139,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     controller: _passwordController,
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Password',
                     ),
                     validator: (String? value) {
@@ -138,7 +163,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         onPressed: () {
                           _signUP();
                         },
-                        child: Icon(Icons.arrow_circle_right_outlined),
+                        child: const Icon(Icons.arrow_circle_right_outlined),
                       ),
                     ),
                   ),
@@ -148,12 +173,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Have an account?"),
+                      const Text("Have an account?"),
                       TextButton(
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: Text(
+                          child: const Text(
                             'Sign In',
                             style: TextStyle(fontSize: 16),
                           ))
@@ -189,6 +214,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
         if (mounted) {
           showSnackBarMessage(
               context, 'Account Has been Created . Please Log in !');
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const LoginScreen()));
         } else {
           if (mounted) {
             showSnackBarMessage(

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:task_manager_101/ui/screen/login_screen.dart';
 import 'package:task_manager_101/ui/widget/body_background.dart';
 import '../../data/network_caller/network_response.dart';
-import '../../data/network_caller/ntwork_caller.dart';
+import '../../data/network_caller/network_caller.dart';
 import '../../data/utility/utils.dart';
 import '../widget/snack_message.dart';
 
@@ -144,7 +144,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     };
 
     NetworkResponse response = await NetworkCaller().resetPasswordRequest(
-      Urls.recoVerPass,
+      Urls.recoverPass,
       body: resetPasswordBody,
     );
 
@@ -171,6 +171,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       }
     }
   }
+  @override
   void dispose()
   {
     _passwordController.dispose();

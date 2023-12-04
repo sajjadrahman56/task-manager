@@ -4,7 +4,7 @@ import 'package:task_manager_101/ui/widget/task_item_card.dart';
 import '../../data/model/task_count__summary_list_model.dart';
 import '../../data/model/task_list_model.dart';
 import '../../data/network_caller/network_response.dart';
-import '../../data/network_caller/ntwork_caller.dart';
+import '../../data/network_caller/network_caller.dart';
 import '../../data/utility/utils.dart';
 
 class CancelTasksScreen extends StatefulWidget {
@@ -50,11 +50,11 @@ class _CancelTasksScreenState extends State<CancelTasksScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            ProfileSummaryCard(),
+            const ProfileSummaryCard(),
             Expanded(
                 child: Visibility(
                   visible: _getCancelledTaskInProgress == false,
-                  replacement: Center(
+                  replacement: const Center(
                     child: CircularProgressIndicator(),
                   ),
                   child: RefreshIndicator(
@@ -67,7 +67,7 @@ class _CancelTasksScreenState extends State<CancelTasksScreen> {
                             onStatusChane: (){
                               getCancelledTask();
                             },
-                            showProgeress: (inProgress)
+                            showProgress: (inProgress)
                             {
                               _getCancelledTaskInProgress = inProgress;
                               if(mounted)

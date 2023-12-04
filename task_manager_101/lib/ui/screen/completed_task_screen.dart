@@ -4,7 +4,7 @@ import 'package:task_manager_101/ui/widget/task_item_card.dart';
 import '../../data/model/task_count__summary_list_model.dart';
 import '../../data/model/task_list_model.dart';
 import '../../data/network_caller/network_response.dart';
-import '../../data/network_caller/ntwork_caller.dart';
+import '../../data/network_caller/network_caller.dart';
 import '../../data/utility/utils.dart';
 
 class CompletedTasksScreen extends StatefulWidget {
@@ -51,11 +51,11 @@ class _CompletedTasksScreenState extends State<CompletedTasksScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            ProfileSummaryCard(),
+            const ProfileSummaryCard(),
             Expanded(
                 child: Visibility(
                   visible: _getCompletedTaskInProgress == false,
-                  replacement: Center(
+                  replacement: const Center(
                     child: CircularProgressIndicator(),
                   ),
                   child: RefreshIndicator(
@@ -68,7 +68,7 @@ class _CompletedTasksScreenState extends State<CompletedTasksScreen> {
                             onStatusChane: (){
                               getCompleteTask();
                             },
-                            showProgeress: (inProgress)
+                            showProgress: (inProgress)
                             {
                               _getCompletedTaskInProgress = inProgress;
                               if(mounted)

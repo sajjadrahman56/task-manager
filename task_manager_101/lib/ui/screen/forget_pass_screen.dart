@@ -6,7 +6,7 @@ import 'package:task_manager_101/ui/screen/pin_verification.dart';
 import 'package:task_manager_101/ui/widget/body_background.dart';
 
 import '../../data/network_caller/network_response.dart';
-import '../../data/network_caller/ntwork_caller.dart';
+import '../../data/network_caller/network_caller.dart';
 import '../../data/utility/utils.dart';
 import '../widget/snack_message.dart';
 
@@ -19,7 +19,7 @@ class ForgetPassScreen extends StatefulWidget {
 
 class _ForgetPassScreenState extends State<ForgetPassScreen> {
   final TextEditingController _emailController = TextEditingController();
-  final GlobalKey<FormState> _formlKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   bool _looginProgress = false;
   @override
@@ -31,7 +31,7 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
           padding: const EdgeInsets.all(24.0),
           child: SingleChildScrollView(
             child: Form(
-              key: _formlKey,
+              key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -55,7 +55,7 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
                   TextFormField(
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Email',
                       ),
                       validator: (String? value) {
@@ -78,14 +78,14 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
                         onPressed: () {
                           pinSend(_emailController.text.toString());
                         },
-                        child: Icon(Icons.arrow_circle_right_outlined),
+                        child: const Icon(Icons.arrow_circle_right_outlined),
                       ),
                     ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Have an account ?"),
+                      const Text("Have an account ?"),
                       TextButton(
                           // here task assign
                           onPressed: () {
@@ -96,7 +96,7 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
                               ),
                             );
                           },
-                          child: Text(
+                          child: const Text(
                             'Sign In',
                             style: TextStyle(fontSize: 16),
                           ))
@@ -112,7 +112,7 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
   }
 
   Future<void> pinSend(String email) async {
-    if (!_formlKey.currentState!.validate()) {
+    if (!_formKey.currentState!.validate()) {
       return;
     }
     _looginProgress = true;

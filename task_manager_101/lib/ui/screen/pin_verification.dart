@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:task_manager_101/ui/screen/login_screen.dart';
@@ -9,7 +8,7 @@ import 'package:task_manager_101/ui/widget/body_background.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../../data/network_caller/network_response.dart';
-import '../../data/network_caller/ntwork_caller.dart';
+import '../../data/network_caller/network_caller.dart';
 import '../../data/utility/utils.dart';
 import '../widget/snack_message.dart';
 
@@ -21,7 +20,7 @@ class PinVerificationScreen extends StatefulWidget {
 }
 
 class _PinVerificationScreenState extends State<PinVerificationScreen> {
-  bool _looginProgress = false;
+  bool _loginProgress = false;
   String enteredPin = '';
 
   @override
@@ -83,7 +82,7 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: Visibility(
-                    visible: _looginProgress == false,
+                    visible: _loginProgress == false,
                     replacement: const Center(
                       child: CircularProgressIndicator(),
                     ),
@@ -91,14 +90,14 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                       onPressed: (){
                         pinVerification(widget.eamilId,enteredPin);
                       },
-                      child: Text('Verify'),
+                      child: const Text('Verify'),
                     ),
                   ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Have an account ?"),
+                    const Text("Have an account ?"),
                     TextButton(
                         onPressed: () {
                           Navigator.pushAndRemoveUntil(
@@ -108,7 +107,7 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                               ),
                               (route) => false);
                         },
-                        child: Text(
+                        child: const Text(
                           'Sign In',
                           style: TextStyle(fontSize: 16),
                         ))
@@ -124,7 +123,7 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
 
   Future<void> pinVerification(String email , String otpCode) async {
     setState(() {
-      _looginProgress = true; // Start the progress indicator
+      _loginProgress = true; // Start the progress indicator
     });
 
     NetworkResponse response = await NetworkCaller().getRequest(
@@ -133,21 +132,24 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
 
     // Update state and UI after network call
     setState(() {
-      _looginProgress = false; // Stop the progress indicator
+      _loginProgress = false; // Stop the progress indicator
     });
 
     if (response.isSuccess) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) =>   ResetPasswordScreen(emailId: email, otp: otpCode,),
-        ),
-      );
+ if(mounted)
+   {
+     Navigator.push(
+       context,
+       MaterialPageRoute(
+         builder: (context) =>   ResetPasswordScreen(emailId: email, otp: otpCode,),
+       ),
+     );
+   }
     } else {
       if (response.statusCode == 401) {
-        showSnackBarMessage(context, "Enter Six Digit Pin");
+      if(mounted)  showSnackBarMessage(context, "Enter Six Digit Pin");
       } else {
-        showSnackBarMessage(context, "Email or Pin is wrong");
+        if(mounted) showSnackBarMessage(context, "Email or Pin is wrong");
       }
     }
   }

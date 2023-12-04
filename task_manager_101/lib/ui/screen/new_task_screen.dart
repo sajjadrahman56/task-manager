@@ -8,7 +8,7 @@ import 'package:task_manager_101/ui/widget/task_item_card.dart';
 
 import '../../data/model/task_count.dart';
 import '../../data/network_caller/network_response.dart';
-import '../../data/network_caller/ntwork_caller.dart';
+import '../../data/network_caller/network_caller.dart';
 import '../../data/utility/utils.dart';
 
 class NewTasksScreen extends StatefulWidget {
@@ -22,7 +22,7 @@ class _NewTasksScreenState extends State<NewTasksScreen> {
   bool _getNewTaskInProgress = false;
   bool _taskSummaryCountInProgress = false;
   TaskListModel taskListModel = TaskListModel();
-  TaskCountSummaryListModel taksCountSummaryListModel =
+  TaskCountSummaryListModel taskCountSummaryListModel =
       TaskCountSummaryListModel();
 
   Future<void> getTaskCountSummaryList() async {
@@ -34,7 +34,7 @@ class _NewTasksScreenState extends State<NewTasksScreen> {
         await NetworkCaller().getRequest(Urls.getStatusCount);
 
     if (response.isSuccess) {
-      taksCountSummaryListModel =
+      taskCountSummaryListModel =
           TaskCountSummaryListModel.fromJson(response.jsonResponse);
     }
     _taskSummaryCountInProgress = false;
@@ -73,17 +73,17 @@ class _NewTasksScreenState extends State<NewTasksScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => AddNewTask()));
+              context, MaterialPageRoute(builder: (context) => const AddNewTask()));
         },
         child: const Icon(Icons.add),
       ),
       body: SafeArea(
           child: Column(
         children: [
-          ProfileSummaryCard(),
+          const ProfileSummaryCard(),
           Visibility(
               visible: _taskSummaryCountInProgress == false &&
-                  (taksCountSummaryListModel.taskCountList?.isNotEmpty ??
+                  (taskCountSummaryListModel.taskCountList?.isNotEmpty ??
                       false),
               replacement: const LinearProgressIndicator(),
               child: SizedBox(
@@ -91,10 +91,10 @@ class _NewTasksScreenState extends State<NewTasksScreen> {
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount:
-                        taksCountSummaryListModel.taskCountList?.length ?? 0,
+                        taskCountSummaryListModel.taskCountList?.length ?? 0,
                     itemBuilder: (context, index) {
                       TaskCount taskCount =
-                          taksCountSummaryListModel.taskCountList![index];
+                          taskCountSummaryListModel.taskCountList![index];
                       return FittedBox(
                         child: SummaryCard(
                           count: taskCount.sum.toString(),
@@ -106,7 +106,7 @@ class _NewTasksScreenState extends State<NewTasksScreen> {
           Expanded(
             child: Visibility(
               visible: _getNewTaskInProgress == false,
-              replacement: Center(
+              replacement: const Center(
                 child: CircularProgressIndicator(),
               ),
               child: RefreshIndicator(
@@ -123,7 +123,7 @@ class _NewTasksScreenState extends State<NewTasksScreen> {
                         onStatusChane: (){
                           _getNewTask();
                         },
-                        showProgeress: (inProgress)
+                        showProgress: (inProgress)
                         {
                           _getNewTaskInProgress = inProgress;
                           if(mounted)

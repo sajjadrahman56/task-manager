@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager_101/data/network_caller/network_response.dart';
-import 'package:task_manager_101/data/network_caller/ntwork_caller.dart';
+import 'package:task_manager_101/data/network_caller/network_caller.dart';
 import 'package:task_manager_101/ui/widget/body_background.dart';
 import 'package:task_manager_101/ui/widget/profile_summary_card.dart';
 import 'package:task_manager_101/ui/widget/snack_message.dart';
@@ -15,8 +15,8 @@ class AddNewTask extends StatefulWidget {
 }
 
 class _AddNewTaskState extends State<AddNewTask> {
-  final TextEditingController _subjecTEControler = TextEditingController();
-  final TextEditingController _descriptController = TextEditingController();
+  final TextEditingController _subjectTEController = TextEditingController();
+  final TextEditingController _descriptionTEController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _createTaskInProgress = false;
 
@@ -25,7 +25,7 @@ class _AddNewTaskState extends State<AddNewTask> {
     return Scaffold(
       body: SafeArea(
         child: Column(children: [
-          ProfileSummaryCard(),
+          const ProfileSummaryCard(),
           Expanded(
               child: BodyBackground(
             child: SingleChildScrollView(
@@ -44,8 +44,8 @@ class _AddNewTaskState extends State<AddNewTask> {
                           height: 16.0,
                         ),
                         TextFormField(
-                          controller: _subjecTEControler,
-                          decoration: InputDecoration(hintText: 'subject name'),
+                          controller: _subjectTEController,
+                          decoration: const InputDecoration(hintText: 'subject name'),
                           validator: (String? value) {
                             if (value?.trim().isEmpty ?? true) {
                               return 'Enter Your Subject';
@@ -57,9 +57,9 @@ class _AddNewTaskState extends State<AddNewTask> {
                           height: 8.0,
                         ),
                         TextFormField(
-                          controller: _descriptController,
+                          controller: _descriptionTEController,
                           maxLines: 5,
-                          decoration: InputDecoration(hintText: 'Description'),
+                          decoration: const InputDecoration(hintText: 'Description'),
                           validator: (String? value) {
                             if (value?.trim().isEmpty ?? true) {
                               return 'Enter Your description';
@@ -74,10 +74,10 @@ class _AddNewTaskState extends State<AddNewTask> {
                           width: double.infinity,
                           child: Visibility(
                             visible: _createTaskInProgress == false,
-                            replacement: Center(child: CircularProgressIndicator(),),
+                            replacement: const Center(child: CircularProgressIndicator(),),
                             child: ElevatedButton(
                                 onPressed: _createTask,
-                                child: Icon(Icons.arrow_circle_right_outlined)),
+                                child: const Icon(Icons.arrow_circle_right_outlined)),
                           ),
                         )
                       ]),
@@ -98,8 +98,8 @@ class _AddNewTaskState extends State<AddNewTask> {
       }
         final NetworkResponse response = await NetworkCaller().postRequest(Urls.createNewTask,
         body:{
-            "title": _subjecTEControler.text.trim(),
-            "description": _descriptController.text.trim(),
+            "title": _subjectTEController.text.trim(),
+            "description": _descriptionTEController.text.trim(),
             "status":"New"
         });
       _createTaskInProgress = false;
@@ -108,8 +108,8 @@ class _AddNewTaskState extends State<AddNewTask> {
       }
 
       if(response.isSuccess){
-        _subjecTEControler.clear();
-        _descriptController.clear();
+        _subjectTEController.clear();
+        _descriptionTEController.clear();
         if(mounted){
           showSnackBarMessage(context, 'create new task ');
         }
@@ -123,8 +123,8 @@ class _AddNewTaskState extends State<AddNewTask> {
 
   @override
   void dispose() {
-    _descriptController.dispose();
-    _subjecTEControler.dispose();
+    _descriptionTEController.dispose();
+    _subjectTEController.dispose();
     super.dispose();
   }
 }
