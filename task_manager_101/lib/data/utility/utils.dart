@@ -17,10 +17,12 @@ class Urls{
   static String getCancelledTask = '$_baseUrl/listTaskByStatus/${TaskStatus.Cancelled.name}';
   static const String getStatusCount = '$_baseUrl/taskStatusCount';
 
-  static const String recoVerPass = '$_baseUrl/RecoverResetPass';
+  static const String recoverPass = '$_baseUrl/RecoverResetPass';
+
+  static const String profileUpdate = '$_baseUrl/profileUpdate';
 
   static   String  updateTaskStatus(String taskId,String status) =>'$_baseUrl/updateTaskStatus/$taskId/$status';
-  static   String  delateTaskStatus(String taskId) =>'$_baseUrl/deleteTask/$taskId';
+  static   String  deleteTaskStatus(String taskId) =>'$_baseUrl/deleteTask/$taskId';
 
 
 
