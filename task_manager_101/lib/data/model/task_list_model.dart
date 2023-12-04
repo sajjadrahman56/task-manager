@@ -11,16 +11,16 @@ class TaskListModel {
     if (json['data'] != null) {
       taskList = <Task>[];
       json['data'].forEach((v) {
-        taskList!.add(new Task.fromJson(v));
+        taskList!.add(Task.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['status'] = status;
-    if (this.taskList != null) {
-      data['data'] = this.taskList!.map((v) => v.toJson()).toList();
+    if (taskList != null) {
+      data['data'] = taskList!.map((v) => v.toJson()).toList();
     }
     return data;
   }
