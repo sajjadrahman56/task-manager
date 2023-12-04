@@ -34,7 +34,7 @@ class NetworkCaller {
          }
         return NetworkResponse(
           statusCode: response.statusCode,
-          isSuccess: true,
+          isSuccess: false,
           jsonResponse: jsonDecode(response.body),
         );
       }
